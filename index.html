@@ -420,18 +420,30 @@ input,select{font-family:inherit;border:none;outline:none;background:none;color:
   </div>
 </div>
 
+<!-- RAZORPAY COMPLIANCE POLICY MODALS -->
+<div class="modal-overlay" id="policyModal">
+  <div class="modal-box" style="max-width:640px;max-height:85vh;overflow-y:auto">
+    <div class="modal-close" onclick="closePolicyModal()">✕</div>
+    <h3 style="font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:6px" id="policyModalTitle">Policy Document</h3>
+    <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px" id="policyModalSubtitle">Razorpay Merchant Compliance</div>
+    <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7" id="policyModalBody"></div>
+  </div>
+</div>
+
 <!-- TOAST ALERTS WRAPPER -->
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-links">
-    <a href="javascript:void(0)" onclick="openPricingModal()">SaaS Subscriptions</a>
+    <a href="javascript:void(0)" onclick="openPricingModal()">Pricing Plans</a>
     <a href="javascript:void(0)" onclick="openWebhookModal()">Webhook API</a>
-    <a href="https://github.com/pauraveephuke2-a11y/arbitragex" target="_blank">GitHub Repository</a>
-    <a href="javascript:void(0)" onclick="claimDemoKey()">Get Free Trial Key</a>
+    <a href="javascript:void(0)" onclick="showPolicy('terms')">Terms & Conditions</a>
+    <a href="javascript:void(0)" onclick="showPolicy('privacy')">Privacy Policy</a>
+    <a href="javascript:void(0)" onclick="showPolicy('refund')">Refund & Cancellation</a>
+    <a href="javascript:void(0)" onclick="showPolicy('contact')">Contact Us</a>
   </div>
-  <div>© 2026 ArbitrageX Pro Intelligence SaaS. All real-time market data verified across public exchange order books.</div>
+  <div style="margin-top:8px">© 2026 ArbitrageX Pro Intelligence Technologies. All real-time market data verified across public exchange order books.</div>
 </footer>
 
 <!-- JAVASCRIPT SAAS & REAL-TIME ARBITRAGE ENGINE -->
@@ -766,10 +778,67 @@ function showToast(msg, type = 'info') {
   }, 3200);
 }
 
+// ===== RAZORPAY COMPLIANCE POLICIES =====
+const POLICIES = {
+  contact: {
+    title: 'Contact Us',
+    sub: 'ArbitrageX Pro Support & Registered Contact',
+    html: `
+      <p><strong>Merchant Trade Name:</strong> ArbitrageX Technologies</p>
+      <p><strong>Support Email:</strong> support@arbitragex.pro</p>
+      <p><strong>Grievance & Support Desk:</strong> Pune, Maharashtra, India - 411038</p>
+      <p><strong>Operating Hours:</strong> Monday to Friday: 9:00 AM - 6:00 PM IST</p>
+      <p style="margin-top:10px">For billing, subscription queries, or technical API support, please reach out via email. Typical response time is within 2 to 4 business hours.</p>
+    `
+  },
+  terms: {
+    title: 'Terms & Conditions',
+    sub: 'User Agreement & Service Specifications',
+    html: `
+      <p>1. <strong>Introduction:</strong> ArbitrageX Pro provides market data intelligence and visual analytics for informational purposes only. We do not provide financial, investment, or legal advice.</p>
+      <p>2. <strong>Non-Custodial Service:</strong> ArbitrageX does not hold user funds, execute brokerage orders, or act as an exchange custodian.</p>
+      <p>3. <strong>SaaS Subscriptions:</strong> Pro and Enterprise memberships grant access to high-frequency live data feeds and webhook push alerts for the active billing duration.</p>
+      <p>4. <strong>Service Availability:</strong> Market prices are retrieved from public cryptocurrency exchanges (Coinbase, Kraken). We strive for 99.9% platform availability.</p>
+    `
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    sub: 'Data Protection & Privacy Policy (DPDP Act & GDPR Compliant)',
+    html: `
+      <p>1. <strong>Information We Collect:</strong> We collect minimal data required to provision SaaS accounts, including email addresses, billing metadata, and user-configured webhook URLs.</p>
+      <p>2. <strong>Payment Information:</strong> All payment transactions are handled through certified PCI-DSS compliant payment gateways (Razorpay / Stripe). ArbitrageX does not store credit card numbers or UPI PINs.</p>
+      <p>3. <strong>Data Security:</strong> We implement SSL/TLS encryption for all communications. Your data is never sold or shared with unauthorized third parties.</p>
+    `
+  },
+  refund: {
+    title: 'Cancellation & Refund Policy',
+    sub: 'Subscription Cancellation and Refund Guidelines',
+    html: `
+      <p>1. <strong>Cancellation:</strong> You may cancel your monthly SaaS subscription at any time directly through your account or by contacting support@arbitragex.pro.</p>
+      <p>2. <strong>Refund Policy:</strong> We offer a <strong>7-Day Money-Back Guarantee</strong> for all first-time monthly Pro subscribers. If you are not satisfied with the analytical data accuracy, contact our support team within 7 days of initial purchase for a full refund.</p>
+      <p>3. <strong>Refund Processing:</strong> Approved refunds are credited back to the original payment source (UPI / Card / NetBanking) within 5 to 7 working days per standard banking timelines.</p>
+    `
+  }
+};
+
+function showPolicy(type) {
+  const p = POLICIES[type];
+  if (!p) return;
+  document.getElementById('policyModalTitle').textContent = p.title;
+  document.getElementById('policyModalSubtitle').textContent = p.sub;
+  document.getElementById('policyModalBody').innerHTML = p.html;
+  document.getElementById('policyModal').classList.add('active');
+}
+
+function closePolicyModal() {
+  document.getElementById('policyModal').classList.remove('active');
+}
+
 // Close modals on outside click
 document.getElementById('routeModal').addEventListener('click', e => { if (e.target.id === 'routeModal') closeRouteModal(); });
 document.getElementById('pricingModal').addEventListener('click', e => { if (e.target.id === 'pricingModal') closePricingModal(); });
 document.getElementById('webhookModal').addEventListener('click', e => { if (e.target.id === 'webhookModal') closeWebhookModal(); });
+document.getElementById('policyModal').addEventListener('click', e => { if (e.target.id === 'policyModal') closePolicyModal(); });
 </script>
 </body>
 </html>
